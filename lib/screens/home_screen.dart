@@ -18,12 +18,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   static const int _fullOpacity = 255;
-  Color _currentColor = Colors.white;
+  Color currentColor = Colors.white;
   bool isDarkOverlay = true;
 
-  void getRandomColor() {
+  void _getRandomColor() {
     final RgbColor rgbColor = widget._repository.getRandomColor();
-    _currentColor = Color.fromARGB(
+    currentColor = Color.fromARGB(
       _fullOpacity,
       rgbColor.red,
       rgbColor.green,
@@ -35,11 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    getRandomColor();
+    _getRandomColor();
   }
 
   void _handleColorChange() {
-    setState(getRandomColor);
+    setState(_getRandomColor);
   }
 
   @override
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const double spacing = 10;
 
     return Scaffold(
-      backgroundColor: _currentColor,
+      backgroundColor: currentColor,
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: _handleColorChange,
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       MyRGBLabel(
                         baseBodyStyle: baseBodyStyle,
                         isDarkOverlay: isDarkOverlay,
-                        currentColor: _currentColor,
+                        currentColor: currentColor,
                       ),
                     ],
                   ),
