@@ -1,5 +1,6 @@
 import 'package:color_repository/color_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_color_interview_task/components/my_rgb_label.dart';
 
 /// Home screen widget.
 class HomeScreen extends StatefulWidget {
@@ -20,18 +21,25 @@ class _HomeScreenState extends State<HomeScreen> {
   Color _currentColor = Colors.white;
   bool isDarkOverlay = true;
 
-  void handleColorChange() {
+  void getRandomColor() {
     final RgbColor rgbColor = widget._repository.getRandomColor();
-    setState(() {
-      isDarkOverlay = ColorRepo.isColorDarkOverlay(rgbColor);
+    _currentColor = Color.fromARGB(
+      _fullOpacity,
+      rgbColor.red,
+      rgbColor.green,
+      rgbColor.blue,
+    );
+    isDarkOverlay = ColorRepo.isColorDarkOverlay(rgbColor);
+  }
 
-      _currentColor = Color.fromARGB(
-        _fullOpacity,
-        rgbColor.red,
-        rgbColor.green,
-        rgbColor.blue,
-      );
-    });
+  @override
+  void initState() {
+    super.initState();
+    getRandomColor();
+  }
+
+  void _handleColorChange() {
+    setState(getRandomColor);
   }
 
   @override
@@ -56,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: _currentColor,
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: handleColorChange,
+        onTap: _handleColorChange,
         child: SafeArea(
           child: Column(
             children: [
@@ -72,34 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const SizedBox(height: spacing),
-                      RichText(
-                        text: TextSpan(
-                          text: 'RGB: ',
-                          style: baseBodyStyle.copyWith(
-                            // dart format off
-                            color: isDarkOverlay ? 
-                                Colors.black54 : 
-                                Colors.white,
-                            // dart format on
-                            fontWeight: FontWeight.bold,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text:
-                                  '(${(_currentColor.r * 255).round()}, '
-                                  '${(_currentColor.g * 255).round()}, '
-                                  '${(_currentColor.b * 255).round()})',
-                              style: baseBodyStyle.copyWith(
-                                // dart format off
-                                color: isDarkOverlay ? 
-                                  Colors.black54 : 
-                                  Colors.white,
-                                // dart format on
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
+                      MyRGBLabel(
+                        baseBodyStyle: baseBodyStyle,
+                        isDarkOverlay: isDarkOverlay,
+                        currentColor: _currentColor,
                       ),
                     ],
                   ),
