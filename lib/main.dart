@@ -1,3 +1,4 @@
+import 'package:color_repository/color_repository.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,33 +30,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final AppColorRepo _colorRepository = AppColorRepo();
+  RgbColor _currentColor = RgbColor(red: 255, green: 255, blue: 255);
+
   int _counter = 0;
 
-  void _incrementCounter() {
+  void _handleColorChange() {
     setState(() {
-      _counter++;
+      _currentColor = _colorRepository.getRandomColor();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      backgroundColor: Color.fromARGB(
+        _currentColor.alpha,
+        _currentColor.red,
+        _currentColor.green,
+        _currentColor.blue,
+      ),
+      body: const Center(
+        child: Text('Hello there'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: _handleColorChange,
+        tooltip: 'Change Color',
+        child: const Icon(Icons.color_lens),
       ),
     );
   }
