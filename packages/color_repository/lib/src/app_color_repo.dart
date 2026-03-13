@@ -1,7 +1,6 @@
 // Rectutment task say to no use external libraries,
 // but math is core, build in library, so I think it's fine.
 import 'dart:math';
-
 import 'package:color_repository/src/color_repo.dart';
 import 'package:color_repository/src/models/models.dart';
 

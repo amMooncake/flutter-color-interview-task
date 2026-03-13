@@ -17,17 +17,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   static const int _fullOpacity = 255;
-
-  RgbColor _currentRgbColor = RgbColor(
-    red: _fullOpacity,
-    green: _fullOpacity,
-    blue: _fullOpacity,
-  );
   Color _currentColor = Colors.white;
+  bool isDarkOverlay = true;
+
   void handleColorChange() {
     final RgbColor rgbColor = widget._repository.getRandomColor();
     setState(() {
-      _currentRgbColor = rgbColor;
+      isDarkOverlay = ColorRepo.isColorDarkOverlay(rgbColor);
+
       _currentColor = Color.fromARGB(
         _fullOpacity,
         rgbColor.red,
@@ -45,8 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
         textTheme.bodyMedium ??
         const TextStyle(
           fontSize: 14,
-          color: Colors.black54,
         );
+    final TextStyle baseHeadlineStyle =
+        textTheme.headlineMedium ??
+        const TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        );
+
     const double spacing = 10;
 
     return Scaffold(
@@ -64,24 +67,34 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         'Hello there',
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: baseHeadlineStyle.copyWith(
+                          color: isDarkOverlay ? Colors.black : Colors.white,
+                        ),
                       ),
                       const SizedBox(height: spacing),
                       RichText(
                         text: TextSpan(
                           text: 'RGB: ',
                           style: baseBodyStyle.copyWith(
-                            color: Colors.black54,
+                            // dart format off
+                            color: isDarkOverlay ? 
+                                Colors.black54 : 
+                                Colors.white,
+                            // dart format on
                             fontWeight: FontWeight.bold,
                           ),
                           children: <TextSpan>[
                             TextSpan(
                               text:
-                                  '(${_currentRgbColor.red}, '
-                                  '${_currentRgbColor.green}, '
-                                  '${_currentRgbColor.blue})',
+                                  '(${(_currentColor.r * 255).round()}, '
+                                  '${(_currentColor.g * 255).round()}, '
+                                  '${(_currentColor.b * 255).round()})',
                               style: baseBodyStyle.copyWith(
-                                color: Colors.black54,
+                                // dart format off
+                                color: isDarkOverlay ? 
+                                  Colors.black54 : 
+                                  Colors.white,
+                                // dart format on
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -95,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 "Tap anywhere to change the color",
                 style: baseBodyStyle.copyWith(
-                  color: Colors.black54,
+                  color: isDarkOverlay ? Colors.black54 : Colors.white,
                 ),
               ),
             ],
