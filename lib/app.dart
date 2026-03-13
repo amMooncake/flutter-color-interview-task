@@ -11,6 +11,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: '.SF Pro Text',
+      ),
       title: 'Flutter Color Interview Task',
       home: HomeScreen(colorRepo: AppColorRepo()),
     );
