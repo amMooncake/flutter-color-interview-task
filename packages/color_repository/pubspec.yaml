@@ -1,7 +1,7 @@
-name: flutter_color_interview_task
-description: "A new Flutter project."
+name: color_repository
+description: "The Repo that handles color generation"
 publish_to: 'none'
-version: 1.0.0+1
+version: 0.0.1
 
 environment:
   sdk: ^3.11.1
