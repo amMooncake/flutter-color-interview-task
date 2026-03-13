@@ -6,6 +6,8 @@ version: 1.0.0+1
 environment:
   sdk: ^3.11.1
 dependencies:
+  color_repository:
+    path: packages/color_repository
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter

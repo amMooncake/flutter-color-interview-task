@@ -105,6 +105,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.1"
+  color_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/color_repository"
+      relative: true
+    source: path
+    version: "0.0.1"
   convert:
     dependency: transitive
     description:
