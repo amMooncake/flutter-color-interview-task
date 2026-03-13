@@ -12,3 +12,7 @@
 2. Fill Github form with your new repo name and press "Create repository from template"
 3. Wait for it to be created and set up action is complete. In a couple of minutes, you'll see the flutter project created in your repo once Github Actions are complete.
 4. Clone and code.
+
+
+# test app
+flutter analyze && flutter test && flutter test packages/color_repository

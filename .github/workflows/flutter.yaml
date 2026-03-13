@@ -40,16 +40,16 @@ jobs:
         if: steps.check_files.outputs.files_exists == 'true'
         run: dart format . --set-exit-if-changed
 
-      # - name: Run tests
-      #   if: steps.check_files.outputs.files_exists == 'true'
-      #   run: |
-      #     # run tests if `test` folder exists
-      #     if [ -d test ]
-      #     then
-      #         flutter test -r expanded
-      #     else
-      #         echo "Tests not found."
-      #     fi
+      - name: Run tests
+        if: steps.check_files.outputs.files_exists == 'true'
+        run: |
+          # run tests if `test` folder exists
+          if [ -d test ]
+          then
+              flutter test -r expanded
+          else
+              echo "Tests not found."
+          fi
 
       - name: Run color_repository package tests
         if: steps.check_files.outputs.files_exists == 'true'
