@@ -1,1 +1,1 @@
-export 'color.dart';
+export 'rgb_color.dart';

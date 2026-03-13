@@ -2,13 +2,14 @@ import 'package:color_repository/color_repository.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Main());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+/// Root application widget.
+class Main extends StatelessWidget {
+  /// Creates the root application widget.
+  const Main({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +23,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/// Home page widget.
 class MyHomePage extends StatefulWidget {
+  /// Creates the home page widget.
   const MyHomePage({super.key});
 
   @override
@@ -30,10 +33,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final AppColorRepo _colorRepository = AppColorRepo();
-  RgbColor _currentColor = RgbColor(red: 255, green: 255, blue: 255);
+  static const int _kInitialChannel = 255;
 
-  int _counter = 0;
+  final AppColorRepo _colorRepository = AppColorRepo();
+  RgbColor _currentColor = RgbColor(
+    red: _kInitialChannel,
+    green: _kInitialChannel,
+    blue: _kInitialChannel,
+  );
 
   void _handleColorChange() {
     setState(() {
