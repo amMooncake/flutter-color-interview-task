@@ -35,7 +35,7 @@ class MyRGBLabel extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
             text:
-                '(${(currentColor.r * 255).round()},'
+                '(${(currentColor.r * 255).round()}, '
                 '${(currentColor.g * 255).round()}, '
                 '${(currentColor.b * 255).round()})',
             style: baseBodyStyle.copyWith(

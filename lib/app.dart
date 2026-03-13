@@ -16,7 +16,10 @@ class App extends StatelessWidget {
         fontFamily: '.SF Pro Text',
       ),
       title: 'Flutter Color Interview Task',
-      home: HomeScreen(colorRepo: AppColorRepo()),
+      home: HomeScreen(
+        colorRepo: AppColorRepo(),
+        favoritesRepo: AppFavoritesRepo(),
+      ),
     );
   }
 }

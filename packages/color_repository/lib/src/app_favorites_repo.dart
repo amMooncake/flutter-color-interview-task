@@ -17,7 +17,7 @@ class AppFavoritesRepo implements FavoritesRepo {
 
   @override
   void addFavorite(RgbColor color) {
-    if (!isFavorite(color)) {
+    if (isFavorite(color)) {
       return;
     }
 
