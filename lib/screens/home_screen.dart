@@ -20,10 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
   // ignore: avoid_late_keyword
   late final ColorRepo _colorRepo;
 
-  // it manages the list of favorite colors
-  // ignore: avoid_late_keyword
-  late final FavoritesRepo _favoritesRepo;
-
   Color currentColor = Colors.white;
   RgbColor currentRGBColor = RgbColor(
     red: _fullOpacity,
@@ -36,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _colorRepo = context.read<ColorRepo>();
-    _favoritesRepo = context.read<FavoritesRepo>();
     _getRandomColor();
   }
 
@@ -50,14 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(_getRandomColor);
   }
 
-  void _handleToggleFavorite() {
-    setState(() {
-      _favoritesRepo.toggleFavorite(currentRGBColor);
-    });
+  void _handleToggleFavorite(FavoritesRepo favoritesRepo) {
+    favoritesRepo.toggleFavorite(currentRGBColor);
   }
 
-  Future<void> _openFavourites() async {
-    await Navigator.of(context).push(
+  void _openFavourites() {
+    Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => FavouritesScreen(
           currentColor: currentColor,
@@ -65,18 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-
-    // when removed from favourites and returned home screen,
-    // this ensure that heart icon is updated
-    if (!mounted) return;
-    setState(() {
-      isDarkOverlay = isColorDarkOverlay(currentRGBColor);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool isCurrentFavorite = _favoritesRepo.isFavorite(currentRGBColor);
+    final FavoritesRepo favoritesRepo = context.watch<FavoritesRepo>();
+    final bool isCurrentFavorite = favoritesRepo.isFavorite(currentRGBColor);
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     const double iconSize = 30;
@@ -137,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: spacing),
                       IconButton(
-                        onPressed: _handleToggleFavorite,
+                        onPressed: () => _handleToggleFavorite(favoritesRepo),
                         icon: Icon(
                           isCurrentFavorite
                               ? Icons.favorite

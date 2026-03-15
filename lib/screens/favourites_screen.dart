@@ -4,7 +4,7 @@ import 'package:flutter_color_interview_task/components/my_rgb_label.dart';
 import 'package:provider/provider.dart';
 
 /// Favourites screen widget.
-class FavouritesScreen extends StatefulWidget {
+class FavouritesScreen extends StatelessWidget {
   /// Creates the favourites screen widget.
   const FavouritesScreen({
     required this.currentColor,
@@ -19,20 +19,13 @@ class FavouritesScreen extends StatefulWidget {
   final bool isDarkOverlay;
 
   @override
-  State<FavouritesScreen> createState() => _FavouritesScreenState();
-}
-
-class _FavouritesScreenState extends State<FavouritesScreen> {
-  @override
   Widget build(BuildContext context) {
-    final FavoritesRepo favoritesRepo = context.read<FavoritesRepo>();
+    final FavoritesRepo favoritesRepo = context.watch<FavoritesRepo>();
     final List<RgbColor> favorites = favoritesRepo
         .getFavorites()
         .reversed
         .toList();
-    final Color overlayColor = widget.isDarkOverlay
-        ? Colors.black
-        : Colors.white;
+    final Color overlayColor = isDarkOverlay ? Colors.black : Colors.white;
 
     final TextTheme textTheme = Theme.of(context).textTheme;
 
@@ -41,13 +34,13 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         : 'Favourite colors:';
 
     return Scaffold(
-      backgroundColor: widget.currentColor,
+      backgroundColor: currentColor,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             title: Text('Favourites', style: TextStyle(color: overlayColor)),
             iconTheme: IconThemeData(color: overlayColor),
-            backgroundColor: widget.currentColor,
+            backgroundColor: currentColor,
             pinned: favorites.isEmpty,
             floating: true,
           ),
@@ -105,9 +98,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                         ),
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              favoritesRepo.removeFavorite(containerRGBcolor);
-                            });
+                            favoritesRepo.removeFavorite(containerRGBcolor);
                           },
                           icon: const Icon(Icons.delete_outline),
                           color: isDarkContainer ? Colors.black : Colors.white,

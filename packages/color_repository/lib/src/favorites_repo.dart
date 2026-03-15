@@ -1,7 +1,8 @@
 import 'package:color_repository/src/models/models.dart';
+import 'package:flutter/material.dart';
 
 /// Repository interface for managing favorite colors.
-abstract class FavoritesRepo {
+abstract class FavoritesRepo extends ChangeNotifier {
   /// Returns all favorite colors.
   List<RgbColor> getFavorites();
 

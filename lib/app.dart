@@ -16,7 +16,7 @@ class App extends StatelessWidget {
         Provider<ColorRepo>(
           create: (_) => AppColorRepo(),
         ),
-        Provider<FavoritesRepo>(
+        ChangeNotifierProvider<FavoritesRepo>(
           create: (_) => AppFavoritesRepo(),
         ),
       ],

@@ -2,7 +2,7 @@ import 'package:color_repository/src/favorites_repo.dart';
 import 'package:color_repository/src/models/models.dart';
 
 /// [FavoritesRepo] implementation.
-class AppFavoritesRepo implements FavoritesRepo {
+class AppFavoritesRepo extends FavoritesRepo {
   final List<RgbColor> _favorites = <RgbColor>[];
 
   @override
@@ -22,6 +22,8 @@ class AppFavoritesRepo implements FavoritesRepo {
     }
 
     _favorites.add(color);
+
+    notifyListeners();
   }
 
   @override
@@ -29,6 +31,8 @@ class AppFavoritesRepo implements FavoritesRepo {
     _favorites.removeWhere(
       (RgbColor item) => _isSameColor(item, color),
     );
+
+    notifyListeners();
   }
 
   @override
