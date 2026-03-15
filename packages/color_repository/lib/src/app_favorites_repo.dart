@@ -41,10 +41,8 @@ class AppFavoritesRepo implements FavoritesRepo {
   }
 
   bool _isSameColor(RgbColor left, RgbColor right) {
-    // dart format off
-    return left.red == right.red && 
-    left.green == right.green && 
-    left.blue == right.blue;
-  // dart format on
+    return left.red == right.red &&
+        left.green == right.green &&
+        left.blue == right.blue;
   }
 }

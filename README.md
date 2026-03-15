@@ -15,4 +15,4 @@
 
 
 # test app
-flutter analyze && flutter test && flutter test packages/color_repository
+dart run custom_lint && flutter analyze && flutter test && flutter test packages/color_repository

@@ -13,12 +13,10 @@ abstract class ColorRepo {
     const double blueWeight = 0.0722;
     const double brightnessThreshold = 128;
 
-    // dart format off
-    final double perceivedBrightness = 
-    redWeight * color.red + 
-    greenWeight * color.green + 
-    blueWeight * color.blue;
-    // dart format on
+    final double perceivedBrightness =
+        redWeight * color.red +
+        greenWeight * color.green +
+        blueWeight * color.blue;
 
     return perceivedBrightness > brightnessThreshold;
   }
