@@ -32,18 +32,18 @@ class _HomeScreenState extends State<HomeScreen> {
   );
   bool isDarkOverlay = true;
 
-  void _getRandomColor() {
-    currentRGBColor = _colorRepo.getRandomColor();
-    currentColor = currentRGBColor.toEntity().toFlutterColor();
-    isDarkOverlay = isColorDarkOverlay(currentRGBColor);
-  }
-
   @override
   void initState() {
     super.initState();
     _colorRepo = context.read<ColorRepo>();
     _favoritesRepo = context.read<FavoritesRepo>();
     _getRandomColor();
+  }
+
+  void _getRandomColor() {
+    currentRGBColor = _colorRepo.getRandomColor();
+    currentColor = currentRGBColor.toEntity().toFlutterColor();
+    isDarkOverlay = isColorDarkOverlay(currentRGBColor);
   }
 
   void _handleColorChange() {
@@ -56,8 +56,27 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> _openFavourites() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => FavouritesScreen(
+          currentColor: currentColor,
+          isDarkOverlay: isDarkOverlay,
+        ),
+      ),
+    );
+
+    // when removed from favourites and returned home screen,
+    // this ensure that heart icon is updated
+    if (!mounted) return;
+    setState(() {
+      isDarkOverlay = isColorDarkOverlay(currentRGBColor);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool isCurrentFavorite = _favoritesRepo.isFavorite(currentRGBColor);
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     const double iconSize = 30;
@@ -81,16 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => FavouritesScreen(
-                    currentColor: currentColor,
-                    isDarkOverlay: isDarkOverlay,
-                  ),
-                ),
-              );
-            },
+            onPressed: _openFavourites,
             icon: const Row(
               children: [
                 Icon(Icons.arrow_forward_ios),
@@ -129,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconButton(
                         onPressed: _handleToggleFavorite,
                         icon: Icon(
-                          _favoritesRepo.isFavorite(currentRGBColor)
+                          isCurrentFavorite
                               ? Icons.favorite
                               : Icons.favorite_border,
                           color: isDarkOverlay ? Colors.black : Colors.white,
@@ -143,7 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 '''
 Tap anywhere to change the color
-Press the heart icon to add to favorites''',
+Press the heart icon to add to favorites
+''',
                 style: baseBodyStyle.copyWith(
                   color: isDarkOverlay ? Colors.black54 : Colors.white,
                 ),

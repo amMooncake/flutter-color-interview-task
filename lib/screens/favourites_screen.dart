@@ -26,7 +26,10 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   @override
   Widget build(BuildContext context) {
     final FavoritesRepo favoritesRepo = context.read<FavoritesRepo>();
-    final List<RgbColor> favorites = favoritesRepo.getFavorites();
+    final List<RgbColor> favorites = favoritesRepo
+        .getFavorites()
+        .reversed
+        .toList();
     final Color overlayColor = widget.isDarkOverlay
         ? Colors.black
         : Colors.white;
@@ -76,6 +79,8 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                 );
 
                 return Container(
+                  // this prevents jumping colors from the old widget state
+                  key: ValueKey(containerRGBcolor.toEntity()),
                   decoration: BoxDecoration(
                     boxShadow: const [
                       BoxShadow(
