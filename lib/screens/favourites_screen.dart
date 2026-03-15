@@ -80,7 +80,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
 
                 return Container(
                   // this prevents jumping colors from the old widget state
-                  key: ValueKey(containerRGBcolor.toEntity()),
+                  key: ValueKey(index),
                   decoration: BoxDecoration(
                     boxShadow: const [
                       BoxShadow(
