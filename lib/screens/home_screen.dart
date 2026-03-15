@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final FavoritesRepo _favoritesRepo;
 
   Color currentColor = Colors.white;
-  RgbColor rgbColor = RgbColor(
+  RgbColor currentRGBColor = RgbColor(
     red: _fullOpacity,
     green: _fullOpacity,
     blue: _fullOpacity,
@@ -33,14 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isDarkOverlay = true;
 
   void _getRandomColor() {
-    rgbColor = _colorRepo.getRandomColor();
-    currentColor = Color.fromARGB(
-      _fullOpacity,
-      rgbColor.red,
-      rgbColor.green,
-      rgbColor.blue,
-    );
-    isDarkOverlay = ColorRepo.isColorDarkOverlay(rgbColor);
+    currentRGBColor = _colorRepo.getRandomColor();
+    currentColor = currentRGBColor.toEntity().toFlutterColor();
+    isDarkOverlay = isColorDarkOverlay(currentRGBColor);
   }
 
   @override
@@ -57,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _handleToggleFavorite() {
     setState(() {
-      _favoritesRepo.toggleFavorite(rgbColor);
+      _favoritesRepo.toggleFavorite(currentRGBColor);
     });
   }
 
@@ -128,13 +123,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: spacing),
                       MyRGBLabel(
                         isDarkOverlay: isDarkOverlay,
-                        currentColor: currentColor,
+                        currentColor: currentRGBColor,
                       ),
                       const SizedBox(height: spacing),
                       IconButton(
                         onPressed: _handleToggleFavorite,
                         icon: Icon(
-                          _favoritesRepo.isFavorite(rgbColor)
+                          _favoritesRepo.isFavorite(currentRGBColor)
                               ? Icons.favorite
                               : Icons.favorite_border,
                           color: isDarkOverlay ? Colors.black : Colors.white,

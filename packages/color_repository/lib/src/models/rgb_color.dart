@@ -1,3 +1,5 @@
+import 'package:color_repository/src/entities/entities.dart';
+
 /// Represents an RGB color value.
 class RgbColor {
   /// Alpha channel,
@@ -18,4 +20,22 @@ class RgbColor {
     required this.green,
     required this.blue,
   });
+
+  /// Creates an RgbColor from a RgbColorEntity
+  factory RgbColor.fromEntity(RgbColorEntity entity) {
+    return RgbColor(
+      red: entity.red,
+      green: entity.green,
+      blue: entity.blue,
+    );
+  }
+
+  /// Converts the RgbColor to a new RgbColorEntity
+  RgbColorEntity toEntity() {
+    return RgbColorEntity(
+      red: red,
+      green: green,
+      blue: blue,
+    );
+  }
 }

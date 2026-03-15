@@ -1,3 +1,4 @@
+import 'package:color_repository/color_repository.dart';
 import 'package:flutter/material.dart';
 
 /// A widget that displays the RGB values of a color.
@@ -13,7 +14,7 @@ class MyRGBLabel extends StatelessWidget {
   final bool isDarkOverlay;
 
   /// allows to display the RGB values.
-  final Color currentColor;
+  final RgbColor currentColor;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +35,9 @@ class MyRGBLabel extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
             text:
-                '(${(currentColor.r * 255).round()}, '
-                '${(currentColor.g * 255).round()}, '
-                '${(currentColor.b * 255).round()})',
+                '(${currentColor.red}, '
+                '${currentColor.green}, '
+                '${currentColor.blue})',
             style: baseBodyStyle.copyWith(
               color: isDarkOverlay ? Colors.black54 : Colors.white,
               fontWeight: FontWeight.normal,

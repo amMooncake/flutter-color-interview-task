@@ -70,9 +70,9 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
               separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemCount: favorites.length,
               itemBuilder: (_, index) {
-                final RgbColor color = favorites[index];
-                final bool isDarkContainer = ColorRepo.isColorDarkOverlay(
-                  color,
+                final RgbColor containerRGBcolor = favorites[index];
+                final bool isDarkContainer = isColorDarkOverlay(
+                  containerRGBcolor,
                 );
 
                 return Container(
@@ -85,12 +85,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                       ),
                     ],
                     borderRadius: BorderRadius.circular(10),
-                    color: Color.fromARGB(
-                      255,
-                      color.red,
-                      color.green,
-                      color.blue,
-                    ),
+                    color: containerRGBcolor.toEntity().toFlutterColor(),
                   ),
                   height: 50,
 
@@ -101,12 +96,12 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                       children: [
                         MyRGBLabel(
                           isDarkOverlay: isDarkContainer,
-                          currentColor: widget.currentColor,
+                          currentColor: containerRGBcolor,
                         ),
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              favoritesRepo.removeFavorite(color);
+                              favoritesRepo.removeFavorite(containerRGBcolor);
                             });
                           },
                           icon: const Icon(Icons.delete_outline),
